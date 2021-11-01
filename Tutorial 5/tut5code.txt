@@ -1,0 +1,45 @@
+from tools import *
+
+---
+
+from sklearn.svm import SVC
+
+---
+
+svm = SVC(C=0.01, gamma='auto', kernel='poly', degree=2)
+
+---
+
+Z = np.reshape(svm.decision_function(Xgrid), [npx, npy])
+ax.contour(x1line, x2line, Z, colors='k', levels=[-1, 0, 1], 
+			alpha=0.5, linestyles=['--', '-', '--'])
+
+---
+
+sv = svm.support_vectors_
+
+---
+
+from sklearn.model_selection import KFold
+
+kf = KFold(n_splits=5, shuffle=True)
+---
+for train_index, test_index in kf.split(X):
+	X_train = X[train_index]
+	y_train = y[train_index]
+	X_test = X[test_index]
+	y_test = y[test_index]
+
+	#use X_train, y_train to train the SVM
+	#...
+	#use svm.predict() to predict the output for the test data set
+	#...
+	#loop through to compare the test data output to what it should be 
+	#	and obtain the fraction of correct classifications)
+	#...
+	#do the same prediction and performance assessment performance 
+	#	with the training data
+	#...
+
+---
+C_array = np.power(10, np.linspace(-1.5, 1.5, 8))
